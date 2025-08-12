@@ -1,0 +1,164 @@
+/* Background */
+body {
+
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Bangers", sans-serif;
+}
+
+#background {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* Layout Flex 2 Cột */
+.main-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 1000px; 
+    margin: 0 auto;
+    gap: 40px; 
+    position: relative;
+    z-index: 2;
+}
+
+
+.left-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.right-side-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-50px);
+    padding: 20px; 
+    border-radius: 15px; 
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+.side-cat {
+    width: 400px;
+}
+
+#title-menu {
+  font-family: "Bangers", cursive;
+  font-size: 60px;
+  color: white;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  padding: 20px 40px;
+  z-index: 1;
+}
+
+
+
+
+#title-menu {
+    width: 600px;
+    height: 400px;
+    object-fit: fill; 
+    z-index: 10;
+    position: relative;
+}
+
+@keyframes moveUp {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+
+/* Menu Buttons */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 250px;
+}
+
+.fonts-button {
+    font-family: "sans-serif", sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(5px);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5), 
+                0 0 10px rgba(200, 200, 200, 0.3); 
+    transition: all 0.3s ease;
+}
+
+/* Hover - Glow lên */
+.fonts-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                0 0 30px rgba(230, 230, 230, 0.5);
+}
+
+.page-transition {
+    animation: zoomFadeOut 1s forwards;
+}
+body {
+	background: linear-gradient(-45deg, #E5D9F2, #CDC1FF);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+@keyframes zoomFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+
