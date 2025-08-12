@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caro Game</title>
+    <link rel="stylesheet" href="./css/mainMenu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script src="client.js" defer></script>
+  <style>
+    table { border-collapse: collapse; margin: 20px auto; }
+    td {
+      width: 30px; height: 30px; text-align: center; vertical-align: middle;
+      border: 1px solid #333; font-size: 20px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+    
+    <div class="main-layout">
+        <div class="left-side">
+            <img src="./img/gaming.gif" class="side-cat">
+        </div>
+[]
+        <div class="right-side-container">
+            <img id="title-menu" src="./img/2025-08-07-CARO-GAME-.gif" alt="">
+            <div class="right-side">
+                <div class="menu-buttons-container">
+                    <div class="menu-buttons">
+                        <button class="fonts-button" onclick="startGame()">Play</button>
+                        <button class="fonts-button" onclick="openOptions()">Options</button>
+                        <button class="fonts-button" onclick="showCredits()">Credits</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="mainMenu.js"></script>
+    <script>
+    function startGame() {
+        document.body.classList.add('page-transition');
+        setTimeout(() => {
+            window.location.href = './startGame.html';  // Load blank page sau hiệu ứng
+        }, 1000);
+    }
+
+    function openOptions() {
+        alert('Options clicked');
+    }
+
+    function showCredits() {
+        alert('Credits clicked');
+    }
+
+    function exitGame() {
+        alert('Exit clicked');
+    }
+</script>
+
+</body>
+</html>
