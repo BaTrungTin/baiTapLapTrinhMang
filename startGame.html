@@ -5,37 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Game</title>
     <link rel="stylesheet" href="./css/startGame.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&family=Jua&family=Paytone+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
 <body>
-    <style>
-    .side-cat {
-    width: 400px;
-    }
-</style>
-    <div class="background">
-        <!-- <img id="background" src="./img/iosd.png" alt="Background" > -->
-    </div>
-
-    <div class="main-layout">
-        <!-- Cột Trái - Mèo Gaming -->
-        <div class="left-side">
-            <img src="./img/catplaygame.gif" class="side-cat" alt="Gaming Cat" >
-        </div>
-
-        <!-- Cột Phải - Form Nhập Tên & Mode -->
+   
         <div class="right-side">
-            <h1 id="title-menu">Start Game</h1>
-            <label for="playerName" class="sr-only">Enter Your Name</label>
+            <label for="playerName" class="sr-only" style="color: #000033;">Enter Your Name</label>
             <input type="text" id="playerName" placeholder="Enter Your Name" class="input-field" aria-label="Player Name">
-            <label for="roomId" class="sr-only">Enter Room ID</label>
-            <input type="text" id="roomId" placeholder="Enter Room ID" class="input-field" aria-label="Room ID">
+            
+            <!-- Room ID input - ẩn ban đầu -->
+            <div id="roomIdContainer" class="room-id-container hidden">
+                <label for="roomId" class="sr-only " style="color: #000033;">Enter Room ID</label>
+                <input type="text" id="roomId" placeholder="Enter Room ID" class="input-field" aria-label="Room ID">
+            </div>
+            
             <div class="error-message" id="errorMessage"></div>
 
             <div class="menu-buttons">
                 <button class="fonts-button mode-btn" onclick="selectMode('PVE')">PVE</button>
                 <button class="fonts-button mode-btn" onclick="selectMode('PVP')">PVP</button>
                 <button class="fonts-button" onclick="confirmStart()">Start Game</button>
+            </div>
+        </div>
+
+        <!-- Popup cho PvP -->
+        <div id="pvpPopup" class="popup-overlay hidden">
+            <div class="popup-content">
+                <h2>Chọn chế độ PvP</h2>
+                <div class="popup-buttons">
+                    <button class="fonts-button popup-btn" onclick="createRoom()">
+                        <i class="fas fa-plus-circle"></i>
+                        Tạo phòng mới
+                    </button>
+                    <button class="fonts-button popup-btn" onclick="joinRoom()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Nhập ID phòng
+                    </button>
+                </div>
+                <button class="close-btn" onclick="closePvpPopup()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         </div>
 
@@ -47,11 +59,67 @@
 
     <script>
         let selectedMode = '';
+        let roomAction = ''; // 'create' hoặc 'join'
 
         function selectMode(mode) {
             selectedMode = mode;
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`.mode-btn[onclick="selectMode('${mode}')"]`).classList.add('active');
+            
+            if (mode === 'PVP') {
+                // Hiện popup PvP
+                showPvpPopup();
+            } else {
+                // Ẩn popup và Room ID input nếu có
+                closePvpPopup();
+                hideRoomIdInput();
+                roomAction = '';
+            }
+        }
+
+        function showPvpPopup() {
+            document.getElementById('pvpPopup').classList.remove('hidden');
+            document.getElementById('pvpPopup').classList.add('show');
+        }
+
+        function closePvpPopup() {
+            document.getElementById('pvpPopup').classList.remove('show');
+            document.getElementById('pvpPopup').classList.add('hidden');
+        }
+
+        function createRoom() {
+            roomAction = 'create';
+            // Tạo ID phòng ngẫu nhiên
+            const randomRoomId = 'ROOM_' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            document.getElementById('roomId').value = randomRoomId;
+            document.getElementById('roomId').readOnly = true;
+            document.getElementById('roomId').placeholder = 'Room ID: ' + randomRoomId;
+            
+            showRoomIdInput();
+            closePvpPopup();
+        }
+
+        function joinRoom() {
+            roomAction = 'join';
+            document.getElementById('roomId').value = '';
+            document.getElementById('roomId').readOnly = false;
+            document.getElementById('roomId').placeholder = 'Enter Room ID';
+            
+            showRoomIdInput();
+            closePvpPopup();
+        }
+
+        function showRoomIdInput() {
+            const roomIdContainer = document.getElementById('roomIdContainer');
+            roomIdContainer.classList.remove('hidden');
+            roomIdContainer.classList.add('show');
+        }
+
+        function hideRoomIdInput() {
+            const roomIdContainer = document.getElementById('roomIdContainer');
+            roomIdContainer.classList.remove('show');
+            roomIdContainer.classList.add('hidden');
+            document.getElementById('roomId').value = '';
         }
 
         function confirmStart() {
@@ -67,11 +135,14 @@
                 errorMessage.style.display = 'block';
                 return;
             }
-            if (!roomId) {
-                errorMessage.textContent = 'Please enter a Room ID!';
+            
+            // Chỉ yêu cầu Room ID khi chọn PVP
+            if (selectedMode === 'PVP' && !roomId) {
+                errorMessage.textContent = 'Please enter a Room ID for PVP mode!';
                 errorMessage.style.display = 'block';
                 return;
             }
+            
             if (!selectedMode) {
                 errorMessage.textContent = 'Please select a mode!';
                 errorMessage.style.display = 'block';
@@ -79,11 +150,13 @@
             }
 
             localStorage.setItem('playerName', playerName);
-            localStorage.setItem('roomId', roomId);
+            localStorage.setItem('roomId', roomId || 'PVE_GAME');
             localStorage.setItem('gameMode', selectedMode);
+            localStorage.setItem('roomAction', roomAction || '');
+            
             document.body.classList.add('page-transition');
             setTimeout(() => {
-                window.location.href = `game.html?player=${encodeURIComponent(playerName)}&mode=${selectedMode}&room=${encodeURIComponent(roomId)}`;
+                window.location.href = `game.html?player=${encodeURIComponent(playerName)}&mode=${selectedMode}&room=${encodeURIComponent(roomId || 'PVE_GAME')}`;
             }, 1000);
         }
 
