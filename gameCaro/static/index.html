@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caro Game</title>
+    <link rel="stylesheet" href="./css/mainMenu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script src="client.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&family=Jua&family=Paytone+One&display=swap" rel="stylesheet">
+  <style>
+    table { border-collapse: collapse; margin: 20px auto; }
+    td {
+      width: 30px; height: 30px; text-align: center; vertical-align: middle;
+      border: 1px solid #333; font-size: 20px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+        <div class="right-side-container">
+            <div class="right-side">
+                <div class="menu-buttons-container">
+                    <div class="menu-buttons">
+                        <button class="fonts-button" onclick="startGame()">Start</button>
+                        <button class="fonts-button" onclick="showCredits()">Credits</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Credits Popup -->
+    <div id="creditsPopup" class="credits-popup">
+        <div class="credits-content">
+            <div class="credits-header">
+                <h2>🎮 Cách Chơi Game Caro</h2>
+                <button class="close-btn" onclick="closeCredits()">&times;</button>
+            </div>
+            <div class="credits-body">
+                <div class="game-rules">
+                    <h3>📋 Luật Chơi:</h3>
+                    <ul>
+                        <li>Hai người chơi lần lượt đánh X và O trên bàn cờ</li>
+                        <li>Mục tiêu: Tạo thành 5 quân cờ liên tiếp (ngang, dọc hoặc chéo)</li>
+                        <li>Người chơi đầu tiên tạo được 5 quân cờ liên tiếp sẽ thắng</li>
+                        <li>Nếu bàn cờ đầy mà không ai thắng thì hòa</li>
+                    </ul>
+                    
+                    <h3>🎯 Chiến Thuật:</h3>
+                    <ul>
+                        <li>Chặn đường của đối thủ khi họ có 3-4 quân liên tiếp</li>
+                        <li>Tạo nhiều cơ hội tấn công cùng lúc</li>
+                        <li>Kiểm soát trung tâm bàn cờ</li>
+                        <li>Phát triển cả tấn công và phòng thủ</li>
+                    </ul>
+                    
+                    <h3>⚡ Chế Độ Chơi:</h3>
+                    <ul>
+                        <li><strong>Player vs Player:</strong> Chơi với bạn bè</li>
+                        <li><strong>Player vs Computer:</strong> Thử thách với AI</li>
+                    </ul>
+                </div>
+                
+                <div class="author-info">
+                    <h3>👥 Tác Giả</h3>
+                    <p><strong>Nhóm 13</strong></p>
+                    <p><em>Đề tài: Game Caro Online</em></p>
+                    <p>Môn học: Lập trình Web</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mainMenu.js"></script>
+    <script>
+    function startGame() {
+        document.body.classList.add('page-transition');
+        setTimeout(() => {
+            window.location.href = './startGame.html';  
+        }, 1000);
+    }
+
+    function showCredits() {
+        document.getElementById('creditsPopup').style.display = 'flex';
+    }
+
+    function closeCredits() {
+        document.getElementById('creditsPopup').style.display = 'none';
+    }
+
+    function exitGame() {
+        alert('Exit clicked');
+    }
+    
+    // Đóng popup khi click bên ngoài
+    window.onclick = function(event) {
+        const popup = document.getElementById('creditsPopup');
+        if (event.target === popup) {
+            closeCredits();
+        }
+    }
+</script>
+
+</body>
+</html>
