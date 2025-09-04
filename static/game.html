@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caro Game</title>
+    <link rel="stylesheet" href="./css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Jersey+15&family=Jua&family=Paytone+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="right-side">
+        <h1 id="title-menu">Caro Game - <span id="mode"></span></h1>
+        <div id="status">Đang khởi tạo...</div>
+        <table id="board"></table>
+        <canvas id="win-line-canvas"></canvas>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div id="popup-menu" class="popup-menu">
+        <div class="popup-content">
+            <button onclick="closeMenu()">Resume</button>
+            <button onclick="replayGame()">Replay</button>
+            <button onclick="openSettings()">Setting</button>
+            <button onclick="returnToMenu()">Exit</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        const gameMode = localStorage.getItem('gameMode') || 'PVP';
+        const script = document.createElement('script');
+        script.src = gameMode === 'PVE' ? 'pve.js' : 'client.js';
+        script.defer = true;
+        document.head.appendChild(script);
+
+        function returnToMenu() {
+            document.body.classList.add('page-transition');
+            setTimeout(() => {
+                window.location.href = './index.html';
+            }, 1000);
+        }
+
+        function toggleMenu() {
+            const popup = document.getElementById('popup-menu');
+            popup.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            document.getElementById('popup-menu').classList.remove('active');
+        }
+
+        function openSettings() {
+            // Add settings functionality here
+            alert('Settings menu not implemented yet');
+            closeMenu();
+        }
+    </script>
+</body>
+</html>
